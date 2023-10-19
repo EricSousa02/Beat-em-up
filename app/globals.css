@@ -9,3 +9,23 @@ body,
   background-color: black;
   color-scheme: dark;
 }
+
+
+* {
+  scrollbar-width: auto;
+  scrollbar-color: #58E6D9 #1b1b1b;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  @apply w-2;
+}
+
+*::-webkit-scrollbar-track {
+  @apply bg-neutral-900;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 16px;
+  @apply bg-primary border-2 border-primary;
+}
