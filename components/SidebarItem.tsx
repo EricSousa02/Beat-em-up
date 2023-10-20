@@ -18,6 +18,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
   return ( 
     <Link
       href={href} 
+      passHref
       className={twMerge(`
         flex 
         flex-row 

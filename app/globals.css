@@ -13,7 +13,7 @@ body,
 
 * {
   scrollbar-width: auto;
-  scrollbar-color: #58E6D9 #1b1b1b;
+  scrollbar-color: #9370DB #1b1b1b;
 }
 
 /* Chrome, Edge, and Safari */
@@ -29,3 +29,26 @@ body,
   border-radius: 16px;
   @apply bg-primary border-2 border-primary;
 }
+
+@media (orientation: portrait) {
+  * {
+    scrollbar-width: auto;
+    scrollbar-color: #9370DB #1b1b1b;
+  }
+
+  *::-webkit-scrollbar {
+    display: none; /* Adicionado para esconder a barra de rolagem no Webkit (Chrome, Edge, Safari) */
+    width: 2px;
+  }
+
+  *::-webkit-scrollbar-track {
+    @apply bg-neutral-900;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    border-radius: 16px;
+    @apply bg-primary border-2 border-primary;
+  }
+}
+
+

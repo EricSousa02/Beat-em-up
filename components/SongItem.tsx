@@ -52,7 +52,9 @@ const SongItem: React.FC<SongItemProps> = ({
           className="object-cover"
           src={imagePath || '/images/music-placeholder.png'}
           fill
+          sizes="(max-width: 640px) 100vw, (max-width: 767px) 90vw, 50vw"
           alt="Image"
+          priority
         />
       </div>
       <div className="flex flex-col items-start w-full pt-4 gap-y-1">

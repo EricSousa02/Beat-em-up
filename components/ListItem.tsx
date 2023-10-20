@@ -53,7 +53,9 @@ const ListItem: React.FC<ListItemProps> = ({
           className="object-cover"
           src={image}
           fill
+          sizes="(max-width: 640px) 100vw, (max-width: 767px) 90vw, 50vw"
           alt="Image"
+          priority
         />
       </div>
       <p className="font-medium truncate py-5">

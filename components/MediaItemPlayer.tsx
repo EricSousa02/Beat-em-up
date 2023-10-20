@@ -11,7 +11,7 @@ interface MediaItemProps {
   onClick?: (id: string) => void;
 }
 
-const MediaItem: React.FC<MediaItemProps> = ({
+const MediaItemPlayer: React.FC<MediaItemProps> = ({
   data,
   onClick,
 }) => {
@@ -32,7 +32,7 @@ const MediaItem: React.FC<MediaItemProps> = ({
       className="
         flex 
         items-center 
-        gap-x-3 
+        md:gap-x-3 
         cursor-pointer 
         hover:bg-neutral-800/50 
         w-full 
@@ -59,8 +59,8 @@ const MediaItem: React.FC<MediaItemProps> = ({
         />
       </div>
       <div className="flex flex-col gap-y-1 overflow-hidden">
-        <p className="text-white truncate">{data.title}</p>
-        <p className="text-neutral-400 text-sm truncate">
+        <p className="text-white truncate hidden md:flex">{data.title}</p>
+        <p className="text-neutral-400 text-sm truncate hidden md:flex">
           By {data.author}
         </p>
       </div>
@@ -68,4 +68,4 @@ const MediaItem: React.FC<MediaItemProps> = ({
   );
 }
  
-export default MediaItem;
+export default MediaItemPlayer;

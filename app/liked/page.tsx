@@ -38,6 +38,8 @@ const Liked = async () => {
                 fill
                 src="/images/liked.png"
                 alt="Playlist"
+                sizes="(max-width: 640px) 100vw, (max-width: 767px) 90vw, 50vw"
+                priority
               />
             </div>
             <div className="flex flex-col gap-y-2 mt-4 md:mt-0">
