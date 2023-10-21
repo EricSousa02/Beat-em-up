@@ -46,12 +46,17 @@ const AuthModal = () => {
         magicLink={true}
         appearance={{
           theme: ThemeSupa,
+          className: {
+            container: 'h-full',
+            //..
+          },
           variables: {
             default: {
               colors: {
                 brand: '#404040',
-                brandAccent: '#22c55e'
+                brandAccent: '#9370DB'
               }
+              
             }
           }
         }}

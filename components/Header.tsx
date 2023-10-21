@@ -11,6 +11,8 @@ import { BiSearch } from "react-icons/bi";
 
 import useAuthModal from "@/hooks/useAuthModal";
 import { useUser } from "@/hooks/useUser";
+import useUploadModal from "@/hooks/useUploadModal";
+import useSubscribeModal from "@/hooks/useSubscribeModal";
 import usePlayer from "@/hooks/usePlayer";
 
 import Button from "./Button";
@@ -29,7 +31,9 @@ const Header: React.FC<HeaderProps> = ({
   const authModal = useAuthModal();
 
   const supabaseClient = useSupabaseClient();
-  const { user } = useUser();
+  const { user, subscription } = useUser();
+  const uploadModal = useUploadModal();
+  const subscribeModal = useSubscribeModal();
 
   const handleLogout = async () => {
     const { error } = await supabaseClient.auth.signOut();
@@ -39,6 +43,20 @@ const Header: React.FC<HeaderProps> = ({
     if (error) {
       toast.error(error.message);
     }
+  }
+
+
+
+  const onUpload = () => {
+    if (!user) {
+      return authModal.onOpen();
+    }
+
+    if (!subscription) {
+      return subscribeModal.onOpen();
+    }
+
+    return uploadModal.onOpen();
   }
 
   return (
@@ -136,18 +154,6 @@ const Header: React.FC<HeaderProps> = ({
             </div>
           ) : (
             <>
-              <div>
-                <Button 
-                  onClick={authModal.onOpen} 
-                  className="
-                    bg-transparent 
-                    text-neutral-300 
-                    font-medium
-                  "
-                >
-                  Sign up
-                </Button>
-              </div>
               <div>
                 <Button 
                   onClick={authModal.onOpen} 
