@@ -42,7 +42,7 @@ const AuthModal = () => {
     >
       <Auth
         supabaseClient={supabaseClient}
-        providers={['github']}
+        providers={['google']}
         magicLink={true}
         appearance={{
           theme: ThemeSupa,
@@ -54,7 +54,7 @@ const AuthModal = () => {
             default: {
               colors: {
                 brand: '#404040',
-                brandAccent: '#9370DB'
+                brandAccent: '#3957ED'
               }
               
             }

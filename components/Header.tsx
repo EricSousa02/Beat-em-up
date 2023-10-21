@@ -2,7 +2,8 @@
 
 import { twMerge } from "tailwind-merge";
 import { RxCaretLeft, RxCaretRight } from "react-icons/rx";
-import { useRouter } from "next/navigation";
+import { AiOutlinePlus } from "react-icons/ai";
+import { useRouter, usePathname } from "next/navigation";
 import { FaUserAlt } from "react-icons/fa";
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { toast } from "react-hot-toast";
@@ -34,6 +35,8 @@ const Header: React.FC<HeaderProps> = ({
   const { user, subscription } = useUser();
   const uploadModal = useUploadModal();
   const subscribeModal = useSubscribeModal();
+
+  const pathname = usePathname();
 
   const handleLogout = async () => {
     const { error } = await supabaseClient.auth.signOut();
@@ -102,7 +105,30 @@ const Header: React.FC<HeaderProps> = ({
             <RxCaretRight className="text-white" size={35} />
           </button>
         </div>
+
+
+
+
+
         <div className="flex md:hidden gap-x-2 items-center">
+          <button
+            onClick={onUpload}
+            className="
+                rounded-full 
+                p-2 
+                bg-white 
+                flex 
+                items-center 
+                justify-center 
+                cursor-pointer 
+                hover:opacity-75 
+                transition
+              "
+          >
+            <AiOutlinePlus className="text-black" size={20} />
+          </button>
+
+          {pathname === '/search' ? (
           <button 
             onClick={() => router.push('/')} 
             className="
@@ -119,6 +145,7 @@ const Header: React.FC<HeaderProps> = ({
           >
             <HiHome className="text-black" size={20} />
           </button>
+          ) : (
           <button 
             onClick={() => router.push('/search')} 
             className="
@@ -135,6 +162,9 @@ const Header: React.FC<HeaderProps> = ({
           >
             <BiSearch className="text-black" size={20} />
           </button>
+          )}
+
+          
         </div>
         <div className="flex justify-between items-center gap-x-4">
           {user ? (

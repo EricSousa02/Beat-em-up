@@ -13,7 +13,7 @@ body,
 
 * {
   scrollbar-width: auto;
-  scrollbar-color: #9370DB #1b1b1b;
+  scrollbar-color: #3957ED #1b1b1b;
 }
 
 /* Chrome, Edge, and Safari */
@@ -33,7 +33,7 @@ body,
 @media (orientation: portrait) {
   * {
     scrollbar-width: auto;
-    scrollbar-color: #9370DB #1b1b1b;
+    scrollbar-color: #3957ED #1b1b1b;
   }
 
   *::-webkit-scrollbar {
