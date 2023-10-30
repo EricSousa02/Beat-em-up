@@ -25,6 +25,7 @@ const Slider: React.FC<SlideProps> = ({
         touch-none 
         w-full 
         h-10
+        cursor-pointer
       "
       defaultValue={[1]}
       value={[value]}
@@ -39,7 +40,8 @@ const Slider: React.FC<SlideProps> = ({
           relative 
           grow 
           rounded-full 
-          h-[3px]
+          h-[6px]
+          cursor-pointer
         "
       >
         <RadixSlider.Range 

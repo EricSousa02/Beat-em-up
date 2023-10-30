@@ -39,7 +39,7 @@ const SearchContent: React.FC<SearchContentProps> = ({
           key={song.id} 
           className="flex items-center gap-x-4 w-full"
         >
-          <div className="flex-1">
+          <div className="flex-1 truncate">
             <MediaItem 
               onClick={(id: string) => onPlay(id)} 
               data={song}
