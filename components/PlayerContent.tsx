@@ -13,6 +13,7 @@ import LikeButton from "./LikeButton";
 import MediaItemPlayer from "./MediaItemPlayer";
 import Slider from "./Slider";
 
+
 interface PlayerContentProps {
   song: Song;
   songUrl: string;
@@ -67,12 +68,37 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
     format: ["mp3"],
   });
 
-  useEffect(() => {
-    sound?.play();
+  const MAX_RETRIES = 5; // Número máximo de tentativas
+  const RETRY_DELAY = 1000; // Tempo de espera entre as tentativas em milissegundos
+  let retryCount = 0;
 
-    return () => {
-      sound?.unload();
-    };
+  const tryPlay = () => {
+    if (retryCount < MAX_RETRIES) {
+      play();
+      retryCount += 1;
+    } else {
+      console.error("Falha nas tentativas de reprodução.");
+    }
+  };
+
+  useEffect(() => {
+    if (sound) {
+      sound.on("loaderror", () => {
+        // Se ocorrer um erro ao carregar o som, tentar novamente após um atraso
+        setTimeout(() => tryPlay(), RETRY_DELAY);
+      });
+
+      sound.on("playerror", () => {
+        // Se ocorrer um erro ao reproduzir o som, tentar novamente após um atraso
+        setTimeout(() => tryPlay(), RETRY_DELAY);
+      });
+
+      sound.play();
+
+      return () => {
+        sound.unload();
+      };
+    }
   }, [sound]);
 
   const handlePlay = () => {
