@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 
@@ -38,7 +36,7 @@ const SubscribeModal: React.FC<SubscribeModalProps> = ({
     if (!open) {
       subscribeModal.onClose();
     }
-  };
+  }
 
   const handleCheckout = async (price: Price) => {
     setPriceIdLoading(price.id);
@@ -67,45 +65,37 @@ const SubscribeModal: React.FC<SubscribeModalProps> = ({
     }
   };
 
-  const premiumProductId = process.env.STRIPE_APP_PREMIUM_ID;
-
-  const targetProduct = products.find(product => product.id === premiumProductId);
-
   let content;
 
-  if (!targetProduct) {
-    content = (
-      <div className="text-center">
-        Produto não encontrado.
-      </div>
-    );
-  } else if (!targetProduct.prices?.length) {
-    content = (
-      <div className="text-center">
-        No prices available for the selected product.
-      </div>
-    );
+  if (products.length) {
+    const filteredProduct = products.find(product => product.id === process.env.STRIPE_APP_PREMIUM_ID);
+
+    if (filteredProduct) {
+      content = (
+        <div>
+          {filteredProduct.prices?.map((price) => (
+            <Button
+              key={price.id}
+              onClick={() => handleCheckout(price)}
+              disabled={isLoading || price.id === priceIdLoading}
+              className="mb-4"
+            >
+              {`Subscribe for ${formatPrice(price)} a ${price.interval} and ${price.id}`}
+            </Button>
+          ))}
+        </div>
+      );
+    } else {
+      content = (
+        <div className="text-center">
+          Produto não encontrado.
+        </div>
+      );
+    }
   } else {
     content = (
-      <div>
-        {targetProduct.prices.map((price) => (
-          <Button
-            key={price.id}
-            onClick={() => handleCheckout(price)}
-            disabled={isLoading || price.id === priceIdLoading}
-            className="mb-4"
-          >
-            {`Subscribe for ${formatPrice(price)} a ${price.interval}`}
-          </Button>
-        ))}
-      </div>
-    );
-  }
-
-  if (subscription) {
-    content = (
       <div className="text-center">
-        Already subscribed.
+        No products available.
       </div>
     );
   }
