@@ -26,7 +26,6 @@ const formatPrice = (price: Price) => {
   return priceString;
 };
 
-
 const SubscribeModal: React.FC<SubscribeModalProps> = ({
   products
 }) => {
@@ -39,7 +38,7 @@ const SubscribeModal: React.FC<SubscribeModalProps> = ({
     if (!open) {
       subscribeModal.onClose();
     }
-  }
+  };
 
   const handleCheckout = async (price: Price) => {
     setPriceIdLoading(price.id);
@@ -68,38 +67,39 @@ const SubscribeModal: React.FC<SubscribeModalProps> = ({
     }
   };
 
-  let content = (
-    <div className="text-center">
-      No products available.
-    </div>
-  )
+  const premiumProductId = process.env.STRIPE_APP_PREMIUM_ID;
 
-  if (products.length) {
+  const targetProduct = products.find(product => product.id === premiumProductId);
+
+  let content;
+
+  if (!targetProduct) {
+    content = (
+      <div className="text-center">
+        Produto não encontrado.
+      </div>
+    );
+  } else if (!targetProduct.prices?.length) {
+    content = (
+      <div className="text-center">
+        No prices available for the selected product.
+      </div>
+    );
+  } else {
     content = (
       <div>
-        {products.map((product) => {
-          if (!product.prices?.length) {
-            return (
-              <div key={product.id}>
-                No prices available
-              </div>
-            );
-          }
-
-          return product.prices.map((price) => (
-            <Button 
-              key={price.id} 
-              onClick={() => handleCheckout(price)}
-              disabled={isLoading || price.id === priceIdLoading}
-              className="mb-4"
-            >
-              {`Subscribe for ${formatPrice(price)} a ${price.interval} and ${price.id}`}
-            </Button>
-
-          ))
-        })}
+        {targetProduct.prices.map((price) => (
+          <Button
+            key={price.id}
+            onClick={() => handleCheckout(price)}
+            disabled={isLoading || price.id === priceIdLoading}
+            className="mb-4"
+          >
+            {`Subscribe for ${formatPrice(price)} a ${price.interval}`}
+          </Button>
+        ))}
       </div>
-    )
+    );
   }
 
   if (subscription) {
@@ -107,7 +107,7 @@ const SubscribeModal: React.FC<SubscribeModalProps> = ({
       <div className="text-center">
         Already subscribed.
       </div>
-    )
+    );
   }
 
   return (
