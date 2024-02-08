@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
 
@@ -23,6 +25,7 @@ const formatPrice = (price: Price) => {
 
   return priceString;
 };
+
 
 const SubscribeModal: React.FC<SubscribeModalProps> = ({
   products
@@ -65,39 +68,46 @@ const SubscribeModal: React.FC<SubscribeModalProps> = ({
     }
   };
 
-  let content;
+  let content = (
+    <div className="text-center">
+      No products available.
+    </div>
+  )
 
   if (products.length) {
-    const filteredProduct = products.find(product => product.id === process.env.STRIPE_APP_PREMIUM_ID);
+    content = (
+      <div>
+        {products.map((product) => {
+          if (!product.prices?.length) {
+            return (
+              <div key={product.id}>
+                No prices available
+              </div>
+            );
+          }
 
-    if (filteredProduct) {
-      content = (
-        <div>
-          {filteredProduct.prices?.map((price) => (
-            <Button
-              key={price.id}
+          return product.prices.filter((price) => price.id === process.env.STRIPE_APP_PREMIUM_ID).map((price) => (
+            <Button 
+              key={price.id} 
               onClick={() => handleCheckout(price)}
               disabled={isLoading || price.id === priceIdLoading}
               className="mb-4"
             >
               {`Subscribe for ${formatPrice(price)} a ${price.interval} and ${price.id}`}
             </Button>
-          ))}
-        </div>
-      );
-    } else {
-      content = (
-        <div className="text-center">
-          Produto não encontrado.
-        </div>
-      );
-    }
-  } else {
+
+          ))
+        })}
+      </div>
+    )
+  }
+
+  if (subscription) {
     content = (
       <div className="text-center">
-        No products available.
+        Already subscribed.
       </div>
-    );
+    )
   }
 
   return (
