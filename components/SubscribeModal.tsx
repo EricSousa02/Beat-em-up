@@ -86,8 +86,10 @@ const SubscribeModal: React.FC<SubscribeModalProps> = ({
             );
           }
 
+          const AppPremiumID = process.env.STRIPE_APP_PREMIUM_ID
+
           return product.prices.map((price) => {
-            if (price.id === "price_1O2wbYJ7gCDicGWMsHQmaTpf") { 
+            if (price.id === AppPremiumID) { 
               return (
                 <Button 
                   key={price.id} 
@@ -95,7 +97,7 @@ const SubscribeModal: React.FC<SubscribeModalProps> = ({
                   disabled={isLoading || price.id === priceIdLoading}
                   className="mb-4"
                 >
-                  {`Subscribe for ${formatPrice(price)} a ${price.interval} and ${price.id}`}
+                  {`Subscribe for ${formatPrice(price)} a ${price.interval}`}
                 </Button>
               );
             } else {
