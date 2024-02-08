@@ -86,17 +86,20 @@ const SubscribeModal: React.FC<SubscribeModalProps> = ({
             );
           }
 
-          return product.prices.filter((price) => price.id === process.env.STRIPE_APP_PREMIUM_ID).map((price) => (
-            <Button 
-              key={price.id} 
-              onClick={() => handleCheckout(price)}
-              disabled={isLoading || price.id === priceIdLoading}
-              className="mb-4"
-            >
-              {`Subscribe for ${formatPrice(price)} a ${price.interval}`}
-            </Button>
+          const primeiroPreco = product.prices[0];
 
-          ))
+          if (primeiroPreco) {
+            return (
+              <Button
+                key={primeiroPreco.id}
+                onClick={() => handleCheckout(primeiroPreco)}
+                disabled={isLoading || primeiroPreco.id === priceIdLoading}
+                className="mb-4"
+              >
+                {`Inscreva-se por ${formatPrice(primeiroPreco)} a cada ${primeiroPreco.interval} e ${primeiroPreco.id}`}
+              </Button>
+            )
+          }
         })}
       </div>
     )
