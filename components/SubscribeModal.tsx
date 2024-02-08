@@ -87,7 +87,7 @@ const SubscribeModal: React.FC<SubscribeModalProps> = ({
           }
 
           return product.prices.map((price) => {
-            if (price.id === process.env.STRIPE_APP_PREMIUM_ID) { 
+            if (price.id === "price_1O2wbYJ7gCDicGWMsHQmaTpf") { 
               return (
                 <Button 
                   key={price.id} 
